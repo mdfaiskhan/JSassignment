@@ -1,0 +1,41 @@
+const ratingData = [
+    { restaurant: 'KFC', rating: 5 },
+    { restaurant: 'Burger King', rating: 4 },
+    { restaurant: 'KFC', rating: 3 },
+    { restaurant: 'Domino', rating: 2 },
+    { restaurant: 'Subway', rating: 3 },
+    { restaurant: 'Domino', rating: 1 },
+    { restaurant: 'Subway', rating: 4 },
+    { restaurant: 'Pizza Hut', rating: 5 }
+  ];
+  
+  function calculateAverageRatings(data) {
+    const ratingMap = {};
+  
+    data.forEach(entry => {
+      if (!ratingMap[entry.restaurant]) {
+        ratingMap[entry.restaurant] = { totalRating: 0, count: 0 };
+      }
+      ratingMap[entry.restaurant].totalRating += entry.rating;
+      ratingMap[entry.restaurant].count += 1;
+    });
+  
+    return Object.keys(ratingMap).map(restaurant => {
+      const { totalRating, count } = ratingMap[restaurant];
+      return {
+        restaurant,
+        averageRating: totalRating / count
+      };
+    });
+  }
+  
+  function filterRestaurantsByRating(averageRatings, minRating) {
+    return averageRatings.filter(entry => entry.averageRating >= minRating);
+  }
+  
+  const averageRatings = calculateAverageRatings(ratingData);
+  console.log('Average Ratings:', averageRatings);
+  
+  const filteredRestaurants = filterRestaurantsByRating(averageRatings, 4);
+  console.log('Filtered Restaurants:', filteredRestaurants);
+  
